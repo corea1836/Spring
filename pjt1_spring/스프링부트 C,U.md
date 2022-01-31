@@ -66,9 +66,6 @@ public interface FAQService {
 
     boolean registerFaq(FAQDto faqDto);
 
-    List<FAQDto> readFaq(int groupNo, int categoryNo);
-    
-    boolean deleteFaq(int groupNo, int faqNo);
 }
 
 // FaqServiceImpl
@@ -85,10 +82,16 @@ public class FAQServiceImpl implements FAQService{
     public boolean registerFaq(FAQDto faqDto) {
         int queryResult = 0;
       // 결과값을 담기위한 int 객체
+      
+      // Update
+      
         if (faqDto.getFaqNo() != 0){
             queryResult = faqDao.updateFaq(faqDto);
           // faqDto의 faqNo에 0이 아닌 값이 있다 = DB에 이미 있을 수 있다. 해당 객체를 Update하는 Mapping을 수행 하러 간다.
         } else {
+          
+      // Create
+          
             queryResult = faqDao.createFaq(faqDto);
           // faqNo가 0이라면 DB에 없는 자료일 수 있다. 해당 객체를 Create하는 Mapping을 수행하러 간다.
         }
@@ -110,12 +113,7 @@ public interface FAQDao {
     public int createFaq(FAQDto faqDto);
 
     public int updateFaq(FAQDto faqDto);
-
-    List<FAQDto> readFaq(int groupNo, int categoryNo);
-
-    public FAQDto selectFaqDetail(int groupNo, int faqNo);
-
-    int deleteFaq(int groupNo, int faqNo);
+  ...
 }
 
 // faq_query.xml
